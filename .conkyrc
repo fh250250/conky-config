@@ -1,0 +1,86 @@
+alignment tr
+background yes
+border_inner_margin 0
+border_outer_margin 0
+border_width 0
+cpu_avg_samples 2
+default_bar_size 100 8
+default_color cccccc
+diskio_avg_samples 2
+double_buffer yes
+draw_borders no
+draw_graph_borders no
+draw_outline no
+draw_shades no
+format_human_readable yes
+gap_x 50
+gap_y 50
+if_up_strictness address
+minimum_size 500 500
+maximum_width 500
+net_avg_samples 2
+no_buffers yes
+override_utf8_locale yes
+own_window yes
+own_window_transparent yes
+own_window_type override
+short_units yes
+update_interval 1
+use_xft yes
+xftfont Ubuntu Mono:size=10
+
+lua_load ~/.conky/lines.lua ~/.conky/rings.lua ~/.conky/main.lua
+lua_draw_hook_pre draw
+
+TEXT
+#### Disk
+${font Ubuntu Mono:size=20}DISK${goto 200}${fs_used_perc /}%$font
+${voffset 10}\
+Used${goto 200}${fs_used /}
+Total${goto 200}${fs_size /}
+IO${goto 200}${diskio /dev/sda}/s
+${diskiograph /dev/sda 30,200}
+${top_io name 1}${goto 120}${top_io pid 1}${goto 180}${top_io io_perc 1}%
+${top_io name 2}${goto 120}${top_io pid 2}${goto 180}${top_io io_perc 2}%
+${top_io name 3}${goto 120}${top_io pid 3}${goto 180}${top_io io_perc 3}%
+${top_io name 4}${goto 120}${top_io pid 4}${goto 180}${top_io io_perc 4}%
+${top_io name 5}${goto 120}${top_io pid 5}${goto 180}${top_io io_perc 5}%
+#### RAM & CPU
+${voffset 20}\
+${font Ubuntu Mono:size=20}RAM${goto 200}${memperc}%\
+${goto 260}CPU${goto 450}${cpu}%$font
+${voffset 10}\
+Used${goto 200}${mem}\
+${goto 260}Frequency${alignr}${freq_g}GHz
+Total${goto 200}${memmax}\
+${goto 260}Load${alignr}${loadavg}
+Cache${goto 200}${cached}\
+${goto 260}Temperature${alignr}${acpitemp}°C
+Swap${goto 200}${swapperc}%\
+${goto 260}Uptime${alignr}${uptime}
+
+${top_mem name 1}${goto 120}${top_mem pid 1}${goto 180}${top_mem mem_res 1}\
+${goto 260}${top name 1}${alignr}${top pid 1}${top cpu 1}%
+${top_mem name 2}${goto 120}${top_mem pid 2}${goto 180}${top_mem mem_res 2}\
+${goto 260}${top name 2}${alignr}${top pid 2}${top cpu 2}%
+${top_mem name 3}${goto 120}${top_mem pid 3}${goto 180}${top_mem mem_res 3}\
+${goto 260}${top name 3}${alignr}${top pid 3}${top cpu 3}%
+${top_mem name 4}${goto 120}${top_mem pid 4}${goto 180}${top_mem mem_res 4}\
+${goto 260}${top name 4}${alignr}${top pid 4}${top cpu 4}%
+${top_mem name 5}${goto 120}${top_mem pid 5}${goto 180}${top_mem mem_res 5}\
+${goto 260}${top name 5}${alignr}${top pid 5}${top cpu 5}%
+
+
+${if_up wlan0}\
+${font Ubuntu Mono:size=20}Wireless$font
+
+${addr wlan0}${alignc}${wireless_essid wlan0}${alignr}${wireless_link_qual_perc wlan0}%
+${upspeedgraph wlan0 30,350}${font Ubuntu Mono:size=20}${alignr}${upspeed wlan0}/s$font
+${downspeedgraph wlan0 30,350}${font Ubuntu Mono:size=20}${alignr}${downspeed wlan0}/s$font
+${endif}
+${if_up eth0}\
+${font Ubuntu Mono:size=20}Ethernet$font ${addr eth0}
+
+${upspeedgraph eth0 30,350}${font Ubuntu Mono:size=20}${alignr}${upspeed eth0}/s$font
+${downspeedgraph eth0 30,350}${font Ubuntu Mono:size=20}${alignr}${downspeed eth0}/s$font
+${endif}
