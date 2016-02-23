@@ -1,0 +1,99 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+
+update_interval 1
+total_run_times 0
+
+short_units yes
+
+if_up_strictness address
+
+use_spacer left
+
+override_utf8_locale no
+
+cpu_avg_samples 2
+
+
+TEXT
+
+[
+	{
+		"full_text": "CPU: ${cpu}%",
+		"color":
+			${if_match ${cpu} < 80}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+	},
+
+	{
+		"full_text": "MEM: ${memperc}% ${memwithbuffers}/${memmax}",
+		"color":
+			${if_match ${memperc} < 90}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+	},
+
+	{
+		"full_text":
+			${if_up wlp3s0}
+				"W: ${addr wlp3s0} (${wireless_essid wlp3s0}${wireless_link_qual_perc wlp3s0}%) ${upspeed wlp3s0} ↑ ${downspeed wlp3s0} ↓"
+			${else}
+				"W: Down"
+			${endif},
+		"color":
+			${if_up wlp3s0}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+	},
+
+	{
+		"full_text":
+			${if_up enp5s0}
+				"E: ${addr enp5s0} ${upspeed enp5s0} ↑ ${downspeed enp5s0} ↓"
+			${else}
+				"E: Down"
+			${endif},
+		"color":
+			${if_up enp5s0}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+
+	},
+
+	{
+		"full_text": "TEMP ${acpitemp} °C",
+		"color":
+			${if_match ${acpitemp} < 70}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+	},
+
+	{
+		"full_text": "BAT ${battery_percent}%",
+		"color":
+			${if_match ${battery_percent} > 30}
+				"\#009900"
+			${else}
+				"\#990000"
+			${endif}
+	},
+	
+	{
+		"full_text": "${time %Y-%m-%d %H:%M:%S}",
+		"color": "\#000099"
+	}
+],
